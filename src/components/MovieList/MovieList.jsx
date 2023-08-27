@@ -1,15 +1,27 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import './MovieList.css'
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 function MovieList() {
 
     const dispatch = useDispatch();
     const movies = useSelector(store => store.movies);
+    const history = useHistory()
 
     useEffect(() => {
         dispatch({ type: 'FETCH_MOVIES' });
     }, []);
+
+    const handleImgClick = (movie) => {
+
+        return () => {
+        console.log("movie", movie)
+        history.push('details')
+
+        dispatch({ type: 'FETCH_DETAILS', payload: movie})
+        }
+    }
 
     return (
         <main>
@@ -19,7 +31,7 @@ function MovieList() {
                     return (
                         <div key={movie.id} >
                             <h3>{movie.title}</h3>
-                            <img src={movie.poster} alt={movie.title}/>
+                            <img onClick={handleImgClick(movie.title)} src={movie.poster} alt={movie.title}/>
                         </div>
                     );
                 })}
