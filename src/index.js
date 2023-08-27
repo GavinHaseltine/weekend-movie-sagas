@@ -8,7 +8,7 @@ import { Provider } from 'react-redux';
 import logger from 'redux-logger';
 // Import saga middleware
 import createSagaMiddleware from 'redux-saga';
-import { takeEvery, put } from 'redux-saga/effects';
+import { takeEvery, put, takeLatest } from 'redux-saga/effects';
 import axios from 'axios';
 
 // Create the rootSaga generator function
@@ -18,8 +18,16 @@ function* rootSaga() {
 }
 
 
-function* fetchDetails(){
-    
+function* fetchDetails(action){
+    try {
+        const movies = yield axios.get(`/api/genre/${action.payload.id}`);
+        console.log('get SPECIF :', movies.data);
+        yield put({ type: 'SET_MOVIES', payload: movies.data });
+
+    } catch {
+        console.log('get specific error');
+    }
+
 }
 
 function* fetchAllMovies() {
