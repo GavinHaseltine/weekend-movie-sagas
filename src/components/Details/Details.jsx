@@ -6,6 +6,7 @@ export function Details(){
 
     const history = useHistory()
     const movies = useSelector(store => store.movies);
+    const genres = useSelector(store => store.genres);
 
 
   const handleBack = () => {
@@ -18,7 +19,14 @@ export function Details(){
     <main>
     <button onClick={handleBack}>Back to Movies</button>
 
-    
+    {genres.map(genres => {
+                    return (
+                        <div key={genres.id} >
+                            <h3>{genres.name}</h3>
+                            
+                        </div>
+                    );
+                })}
         
             <h1>MovieList</h1>
             <section className="movies">
@@ -28,6 +36,7 @@ export function Details(){
                             <h3>{movie.title}</h3>
                             <img src={movie.poster} alt={movie.title}/>
                             <p>{movie.description}</p>
+                            
                         </div>
                     );
                 })}

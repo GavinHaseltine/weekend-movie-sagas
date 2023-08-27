@@ -16,9 +16,10 @@ function MovieList() {
     const handleImgClick = (movie) => {
 
         return () => {
-        console.log("movie", movie)
+        //console.log("movie", movie)
         history.push('details')
 
+        dispatch({ type: 'FETCH_GENRE', payload: movie})
         dispatch({ type: 'FETCH_DETAILS', payload: movie})
         }
     }
